@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- Page Header -->
+<header class="masthead" style="background-image: url({{ url_for('static', filename='img/home.jpg') }})">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <div class="site-heading">
+          <h2>A Simple Photography Blog</h2>
+          <span class="subheading">A Blog Theme by Start Bootstrap</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Main Content -->
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-md-10 mx-auto">
+      {% for post in posts.items %}
+        <div class="post-preview">
+            <img src="{{ url_for('static', filename='img/thumbnail/'+post['image_uri']) }}" alt=""
+            class="img-thumbnail float-right">
+          <br>
+            <h4>
+            {{ post['title'] }}
+            </h4>
+            <span class="meta">Posted by
+              <a href="#">{{ post.author }}</a>
+              on {{ post.created_on.strftime('%B %d, %Y at %H:%M:%S') }}
+            </span>
+              <p class="post-meta">
+                {{ post['text_preview'] }} ...
+              </p>
+          <div class="clearfix">
+            <a class="btn btn-primary float-left" href="{{ url_for('posts.view_post', id=post['id']) }}">
+              Continue reading
+            </a>
+          </div>
+            <hr>
+        </div>
+      {% endfor %}
+      <!-- Pager -->
+      <div class="clearfix">
+        {% if prev_url %}
+          <a class="btn btn-primary float-left" href="{{ prev_url }}">&larr; Newer Posts</a>
+        {% endif %}
+        {% if next_url %}
+        <a class="btn btn-primary float-right" href="{{ next_url }}">Older Posts &rarr;</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr>
+
+{% endblock %}

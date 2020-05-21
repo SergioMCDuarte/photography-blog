@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url({{ url_for('static', filename='img/home.jpg') }})">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>Update Post</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <form method="POST" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            {{ form.post_title.label }} {{ form.post_title(id='postTitle', class='form-control', value=post.title) }}
+            <br>
+            <div >
+              <label for="currentPhoto">Current Photo</label>
+              <a href="#">
+                <img id="currentPhoto" class="img-fluid" src="{{ url_for('static', filename='img/'+post.image_uri) }}" alt="">
+              </a>
+            </div>
+            <br>
+            {{ form.image_file.label }} {{ form.image_file(id='photoUpload',class="form-control-file") }}
+            <br>
+            {{ form.image_caption.label }} {{ form.image_caption(id='photoCaption', class='form-control', value=post.image_caption) }}
+            <br>
+            {{ form.post_text.label }} {{ form.post_text(id='postText', class='form-control',rows=15) }}
+            <br>
+            {{ form.submit(id='createPost',class="btn btn-primary") }}
+            <div class="float-right">
+              <!-- Button trigger modal -->
+              <a class="btn btn-danger" role="button" href="" data-toggle="modal" data-target="#deletePostConfirmation">Delete Post</a>
+              <a class="btn btn-secondary" role="button" href="{{url_for('core.index')}}">Cancel</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- Modal -->
+  <div class="modal fade" id="deletePostConfirmation" tabindex="-1" role="dialog" aria-labelledby="deletePostConfirmationLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Delete Post</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to delete the post?
+        </div>
+        <div class="modal-footer">
+          <form class="" method="POST">
+            {{ form.hidden_tag() }}
+            {{ delete_form.delete(id='deletePost', class="btn btn-danger") }}
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url({{ url_for('static', filename='img/home.jpg') }})">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>{{ post.title }}</h1>
+            <span class="meta">Posted by
+              <a href="#">{{ post.author }}</a>
+              on {{ post.created_on.strftime('%B %d, %Y') }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <a href="#">
+            <img class="img-fluid" src="{{ url_for('static', filename='img/'+post.image_uri) }}" alt="">
+          </a>
+          <span class="caption text-muted">{{ post.image_caption }}</span>
+          <p>{{ post.text_html | safe }}</p>
+          <br>
+          <!-- if logged in -->
+          {% if current_user.is_authenticated %}
+          <a class="btn btn-primary" role="button" href="{{url_for('posts.edit_post', id=post.id)}}">Edit Post</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </article>
+
+{% endblock %}

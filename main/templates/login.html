@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- Page Header -->
+<header class="masthead" style="background-image: url({{ url_for('static', filename='img/home.jpg') }})">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <div class="post-heading">
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<article>
+  <div class="container">
+      <div class="row d-flex justify-content-center">
+        <form method="POST" class="form-signin">
+          <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+          {{ form.hidden_tag() }}
+          {{ form.username(id='inputUsername',class="form-control", placeholder="Username") }}
+          {{ form.password(id='inputPassword',class="form-control", type="password", placeholder="Password") }}
+          <br>
+          {{ form.submit(id='signIn',class="btn btn-primary btn-block") }}
+        </form>
+    </div>
+  </div>
+</article>
+
+{% endblock %}

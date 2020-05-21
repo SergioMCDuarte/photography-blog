@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block scripts %}
+
+{% block content %}
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url({{ url_for('static', filename='img/home.jpg') }})">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>New Post</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <form method="POST" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            {{ form.post_title(id='postTitle', class='form-control', placeholder='Post Title') }}
+            <br>
+            {{ form.image_file(id='photoUpload',class="form-control-file") }}
+            <br>
+            {{ form.image_caption(id='photoCaption', class='form-control', placeholder='Photo Caption') }}
+            <br>
+            {{ form.post_text.label }} {{ form.post_text( class='form-control',rows=15) }}
+            {{ super() }}
+            {{ pagedown.include_pagedown() }}
+            <br>
+            {{ form.submit(id='createPost',class="btn btn-primary") }}
+            <a class="btn btn-secondary" role="button" href="{{url_for('core.index')}}">Cancel</a>
+          </form>
+        </div>
+      </div>
+    </div>
+  </article>
+{% endblock %}
+{% endblock %}
+
+
+<!--id='postText',-->
