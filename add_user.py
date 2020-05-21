@@ -34,7 +34,7 @@ if sys.argv[5]=='--posts' and sys.argv[6].isdigit():
             title = fake.text(100),
             author_id=1,
             image_caption=fake.text(40),
-            image_uri=choice(os.listdir('static/img/thumbnail')),
+            image_uri=choice(os.listdir('static/img/thumbnail')) if os.listdir('static/img/thumbnail') else '../home.jpg',
             text_raw = fake.text(1000)
         )
         posts.append(post)
