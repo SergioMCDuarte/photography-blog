@@ -4,7 +4,10 @@ from main.models import Post, User
 from main import login_manager
 from flask_login import login_user, login_required, logout_user
 
-core = Blueprint('core', __name__)
+core = Blueprint(
+    'core', __name__,
+    template_folder='templates/core'
+)
 
 @core.route('/', methods=['POST','GET'])
 def index():

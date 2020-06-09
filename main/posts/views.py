@@ -7,7 +7,10 @@ import os
 from main import db
 from main.posts.picture_handler import add_photo
 
-posts = Blueprint('posts', __name__)
+posts = Blueprint(
+    'posts', __name__,
+    template_folder='templates/posts'
+)
 
 @posts.route('/posts/<int:id>')
 def view_post(id):
