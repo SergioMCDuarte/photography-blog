@@ -1,28 +1,26 @@
 import os
 from PIL import Image
-from flask import url_for, current_app
+#from flask import url_for, current_app
 from datetime import datetime
 from werkzeug.security import hashlib
-hashlib.md5().hexdigest()
 
 def add_photo(photo_upload):
     filename = photo_upload.filename
     ext_type = filename.split('.')[-1]
-    storage_file_name = '{}_{}.{}'\
+    storage_file_name = '{}.{}'\
                             .format(
-                            str(int(datetime.now().timestamp())),
                             hashlib.md5(filename.split('.')[0].encode('utf-8')).hexdigest(),
                             ext_type
                             )
     image_path = os.path.join(
-        current_app.root_path.split('main')[0],
-        'static/img',
+        os.path.abspath('static'),
+        'img',
         storage_file_name
     )
 
     thumbnail_path = os.path.join(
-        current_app.root_path.split('main')[0],
-        'static/img/thumbnail',
+        os.path.abspath('static'),
+        'img/thumbnail',
         storage_file_name
     )
 
