@@ -65,7 +65,7 @@ class Post(db.Model):
             'created_on': self.created_on,
             'image_caption': self.image_caption,
             'image_uri': self.image_uri,
-            'text': self.text
+            'text': self.text_raw
         })
 
     @staticmethod
