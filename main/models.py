@@ -36,7 +36,7 @@ class Post(db.Model):
     updated_on = db.Column(db.DateTime, nullable=True)
     image_caption = db.Column(db.String(256), nullable=True, default='')
     image_uri = db.Column(db.String(256), nullable=True, default='')
-    text_raw = db.Column(db.String, nullable=True)
+    text_raw = db.Column(db.Text, nullable=True)
     text_html = db.Column(db.Text, nullable=True)
     text_preview = db.Column(db.Text, nullable=True)
 

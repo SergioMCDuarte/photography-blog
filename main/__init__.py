@@ -3,8 +3,10 @@ from flask_sqlalchemy import SQLAlchemy
 import os
 from flask_bootstrap import Bootstrap
 from flask_migrate import Migrate
-from flask_login import LoginManager
+from flask_login import LoginManager, current_user
 from flask_pagedown import PageDown
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -19,6 +21,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = \
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app=app)
+
 Migrate(app=app,db=db)
 
 login_manager = LoginManager()
@@ -47,4 +50,30 @@ def page_not_found(e):
 def page_not_found(e):
     return render_template('500.html'), 500
 
-## -- DataBase Setup -- ##
+## -- Admin Page -- ##
+from main.models import User, Post
+app.config['FLASK_ADMIN_SWATCH'] = 'sandstone'
+
+class BlogModelView(ModelView):
+
+    def is_accessible(self):
+        return current_user.is_authenticated
+
+    def inaccessible_callback(self, name, **kwargs):
+        # redirect to login page if user doesn't have access
+        return redirect(url_for('core.login', next=request.url))
+
+class UserView(BlogModelView):
+    column_exclude_list = ['password_hash']
+
+class PostView(BlogModelView):
+    column_exclude_list = [
+        'text_raw',
+        'text_html',
+        'text_preview',
+        'user'
+    ]
+
+admin = Admin(app=app, template_mode='bootstrap3')
+admin.add_view(UserView(User, db.session))
+admin.add_view(PostView(Post, db.session))
